@@ -1,0 +1,5 @@
+{
+    "java.compile.nullAnalysis.mode": "automatic",
+    "codegpt.apiKey": "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",
+    "codegpt.model": "ChatGPT"
+}
