@@ -3,12 +3,13 @@ import { StyleSheet, Text, View, FlatList, ScrollView, TouchableOpacity, Dimensi
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { fetchCoinData, setIsTradeModalVisible, selectIsTradeModalVisible } from '../Src/redux/market/coinSlice';
-import { responsiveHeight,responsiveWidth,responsiveFontSize } from 'react-native-responsive-dimensions';
+import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions';
 import MainLayout from './MainLayout';
-import { COLORS } from '../constants';
+import { COLORS, FONTS, SIZES, icons } from '../constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Chart } from '../components';
 
-const {width,height}=Dimensions.get("window")
+const { width, height } = Dimensions.get("window")
 
 const renderItem = ({ item, onPress }) => {
   const handleItemPress = () => {
@@ -62,27 +63,42 @@ const Home = () => {
   return (
     <MainLayout selectedItem={selectedItem}>
       {/* <ScrollView style={{ flex: 1, color: COLORS.mainBgColor }}> */}
-        <View
-          style={[
-            styles.searchEluation,
-            {
-              paddingVertical: 15,
-              backgroundColor: COLORS.bgColor,
-            },
-          ]}
-        >
-          <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'row', paddingHorizontal: 10 }}>
-            <Text style={{ color: COLORS.textColor, fontWeight: '600', fontSize: responsiveFontSize(2) }}>Trade on Commodity</Text>
-          </View>
+      <View
+        style={[
+          styles.searchEluation,
+          {
+            paddingVertical: 15,
+            backgroundColor: COLORS.bgColor,
+          },
+        ]}
+      >
+
+        <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'row', paddingHorizontal: 10 }}>
+          <Text style={{ color: COLORS.textColor, fontWeight: '600', fontSize: responsiveFontSize(2) }}>Trade on Commodity</Text>
         </View>
-        <View style={{ marginTop: 15,alignSelf:'center',display:'flex',justifyContent:'center' }}>
-          <FlatList
-            data={coinsData}
-            renderItem={({ item }) => renderItem({ item, onPress: handleItemPress })}
-            keyExtractor={(item) => item.id.toString()}
-            numColumns={2}
-          />
-        </View>
+      </View>
+      <View style={{ marginTop: 1 }}>
+        <Chart />
+      </View>
+      <View style={{ marginTop: 230, backgroundColor: "#eeaeca", paddingVertical: 10, }}>
+        <Text style={{
+          fontSize: responsiveFontSize(2.2), marginLeft: responsiveWidth(3),
+          fontWeight: '700', color: '#000'
+        }}>Top Commodity</Text>
+      </View>
+      <View style={{
+        marginTop: 10, alignSelf: 'center', display: 'flex', justifyContent: 'center',
+        marginBottom: responsiveHeight(45),
+      }}>
+
+        <FlatList
+          data={coinsData}
+          renderItem={({ item }) => renderItem({ item, onPress: handleItemPress })}
+          keyExtractor={(item) => item.id.toString()}
+          numColumns={2}
+        />
+      </View>
+
       {/* </ScrollView> */}
     </MainLayout>
   );
